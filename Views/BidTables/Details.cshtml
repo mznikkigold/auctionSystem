@@ -1,0 +1,90 @@
+﻿@model auctionSystem.Models.BidTable
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BidTable</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BidderName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidderName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidderText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidderText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bidprice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bidprice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidQuantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidQuantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Item.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Item.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BidId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

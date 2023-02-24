@@ -1,0 +1,104 @@
+﻿@model IEnumerable<auctionSystem.Models.BidTable>
+
+@{
+    ViewBag.Title = "Index";
+}
+@if (Request.IsAuthenticated)
+{
+    <h2>Auction</h2>
+    if (User.IsInRole("Vendor, Customer"))
+    {
+        <p>
+            @Html.ActionLink("Create New Bid", "Create")
+        </p>
+    }
+
+    <!-- Topic Cards -->
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <a href="">
+                            <div class="card-flyer">
+                                <div class="text-box">
+                                    <div class="image-box">
+                                        <img src="@Html.DisplayFor(modelItem => item.Item.picture)" alt="" />
+                                    </div>
+                                    <div class="text-container">
+                                        <h6>@Html.DisplayFor(modelItem => item.User.FirstName)</h6>
+                                        <p>Bidder Desc:  @Html.DisplayFor(modelItem => item.BidderText)</p>
+                                        <p>Item Name:  @Html.DisplayFor(modelItem => item.Item.ItemName) </p>
+                                        <p>Bid Price:  @Html.DisplayFor(modelItem => item.Bidprice)</p>
+                                        <p>Bid Quantity:  @Html.DisplayFor(modelItem => item.BidQuantity)</p>
+                                        <p>Bid Date:  @Html.DisplayFor(modelItem => item.DateCreated) </p>
+
+                                        @*<p>User:  @Html.DisplayFor(modelItem => item.User.FirstName)</p>*@
+                                        <p class="bidderIncrementParagraph">
+                                            <span class="glyphicon glyphicon-time" aria-hidden="true" style="font-size: 16px;color: silver;"></span>
+                                            @{
+                                                string Dateend;
+                                                if (item.Item.close_date_time < DateTime.Now)
+                                                {
+                                                    Dateend = "Closed";
+                                                }
+                                                else
+                                                {
+                                                    Dateend = "Opened";
+                                                }
+                                            }
+                                            <label class="displayLabelProduct">@Html.Raw("&nbsp; ")</label>
+                                            <label id="@Html.Raw("time" + item.Item.ItemId)" style="color: red;" class="displayLabelProduct">
+                                                Closed:  @Dateend
+                                            </label>
+                                        </p>
+                                        <p class="bidderIncrementParagraph">
+                                            <span class="glyphicon glyphicon-time" aria-hidden="true" style="font-size: 16px;color: silver;"></span>
+                                            @{
+                                                DateTime end;
+                                                if (item.Item.close_date_time != null)
+                                                {
+                                                    end = (DateTime)item.Item.close_date_time;
+                                                }
+                                                else
+                                                {
+                                                    end = DateTime.Now;
+                                                }
+                                                DateTime now = DateTime.Now;
+                                                TimeSpan diff = end.Subtract(now);
+                                            }
+                                            <label class="displayLabelProduct">@Html.Raw("&nbsp; ")</label>
+                                            <label id="@Html.Raw("time" + item.Item.ItemId)" style="color: red;" class="displayLabelProduct">
+                                                Closed:  @diff.ToString(@"dd\:hh\:mm\:ss")
+                                            </label>
+                                        </p>
+                                        <p class="bidderIncrementParagraph">
+                                            <span class="glyphicon glyphicon-time" aria-hidden="true" style="font-size: 16px;color: silver;"></span>
+                                            @{
+                                                TimeSpan difff = new TimeSpan(0);
+                                            }
+                                            <label class="displayLabelProduct">@Html.Raw("&nbsp; ")</label>
+                                            <label id="@Html.Raw("time"+item.Item.ItemId)" class="displayLabelProduct">
+                                                Duration:  @difff.ToString(@"dd\:hh\:mm\:ss")
+                                            </label>
+                                        </p>
+                                        @*<p>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BidId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BidId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BidId })
+        </p>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Please Kindly Login to continue</h2>
+}

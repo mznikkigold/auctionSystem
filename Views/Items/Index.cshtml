@@ -1,0 +1,64 @@
+﻿@model IEnumerable<auctionSystem.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+@*ViewContext.HttpContext.User.IsInRole("Admin")*@
+@if (Request.IsAuthenticated)
+{
+    <h2>Manage Item</h2>
+
+    <p>
+        @Html.ActionLink("Create New Item", "Create")
+    </p>
+
+    <!-- Topic Cards -->
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <a href="">
+                            <div class="card-flyer">
+                                <div class="text-box">
+                                    <div class="image-box">
+                                        <img src="@Html.DisplayFor(modelItem => item.picture)" alt="" />
+                                    </div>
+                                    <div class="text-container">
+                                        <h6>@Html.DisplayFor(modelItem => item.ItemName)</h6>
+                                        <p>Item Price:  @Html.DisplayFor(modelItem => item.ItemPrice)</p>
+                                        <p>Item Desc:  @Html.DisplayFor(modelItem => item.ItemDesc)</p>
+                                        <p>Vendor Name:  @Html.DisplayFor(modelItem => item.User.FirstName)</p>
+                                        <p>Item Quantity:  @Html.DisplayFor(modelItem => item.itemQuantity)</p>
+                                        <p>Bid Date:  @Html.DisplayFor(modelItem => item.open_date_time) - @Html.DisplayFor(modelItem => item.close_date_time)</p>
+                                        @*<p>User:  @Html.DisplayFor(modelItem => item.User.FirstName)</p>*@
+                                        <p>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }) |
+                                               @Html.ActionLink("Details", "Details", new { id = item.ItemId })
+                                            |
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.ItemId })
+                                        </p>
+                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <h2>Please Kindly Login to continue</h2>
+}
+
+@*<script>
+    if (item.User.Role == "Admn") {
+        $('ul.navbar-nav li:nth-child(3)').hide();
+    }
+   
+</script>*@

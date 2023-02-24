@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+
+        $(document).on('click', '.approveLoanClass', function () {
+            var userSubmitOpenPay = new Object();
+
+            userSubmitOpenPay.approve_bid = 1;
+            userSubmitOpenPay.Bid_status = "Approved";
+            userSubmitOpenPay.BidId = $(this).data('bidid');
+            userSubmitOpenPay.itemQuantity = $(this).data('quant'); 
+            userSubmitOpenPay.itemTotalQuantity = $(this).data('totalquat'); 
+            userSubmitOpenPay.itemId = $(this).data('itemid');
+            console.log(userSubmitOpenPay)
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: "/TopBidders/ApproveBid",
+                data: JSON.stringify(userSubmitOpenPay),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response)
+                    if (response != null && response.status !== "error") {
+                        alert("Record saved successfully!");
+                    } else {
+                        alert("Account Does Not Match");
+                    }
+                    window.location.href = window.location.href;
+                },
+                failure: function (response) {
+                    //   alert(response.responseText);
+                    window.location.href = window.location.href;
+                },
+                error: function (response) {
+                    // alert(response.responseText);
+                    window.location.href = window.location.href;
+                }
+            })
+        });
+    </script>
+</head>
+
+<style>
+    /*----  Main Style  ----*/
+    #cards_landscape_wrap-2 {
+        text-align: center;
+        background: #F7F7F7;
+    }
+    #cards_landscape_wrap-2 a {
+        text-decoration: none;
+        outline: none;
+    }
+    #cards_landscape_wrap-2 .card-flyer {
+        border-radius: 5px;
+    }
+    #cards_landscape_wrap-2 .card-flyer .image-box {
+        background: #ffffff;
+        overflow: hidden;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.50);
+        border-radius: 5px;
+    }
+    #cards_landscape_wrap-2 .card-flyer .image-box img {
+        -webkit-transition: all .9s ease;
+        -moz-transition: all .9s ease;
+        -o-transition: all .9s ease;
+        -ms-transition: all .9s ease;
+        width: 100%;
+        height: 200px;
+    }
+    #cards_landscape_wrap-2 .card-flyer:hover .image-box img {
+        opacity: 0.7;
+        -webkit-transform: scale(1.15);
+        -moz-transform: scale(1.15);
+        -ms-transform: scale(1.15);
+        -o-transform: scale(1.15);
+        transform: scale(1.15);
+    }
+    #cards_landscape_wrap-2 .card-flyer .text-box {
+        text-align: center;
+    }
+    #cards_landscape_wrap-2 .card-flyer .text-box .text-container {
+        padding: 30px 18px;
+    }
+    #cards_landscape_wrap-2 .card-flyer {
+        background: #FFFFFF;
+        margin-top: 50px;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        -ms-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.40);
+    }
+    #cards_landscape_wrap-2 .card-flyer:hover {
+        background: #fff;
+        box-shadow: 0px 15px 26px rgba(0, 0, 0, 0.50);
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        -ms-transition: all 0.2s ease-in;
+        -o-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+        margin-top: 50px;
+    }
+    #cards_landscape_wrap-2 .card-flyer .text-box p {
+        margin-top: 10px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        color: #000000;
+    }
+    #cards_landscape_wrap-2 .card-flyer .text-box h6 {
+        margin-top: 0px;
+        margin-bottom: 4px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Roboto Black', sans-serif;
+        letter-spacing: 1px;
+        color: #00acc1;
+    }
+    .collapse {
+        display:flex !important;
+        color: azure;
+    }
+    .navbar-nav li {
+        margin-right: 10px !important;
+        color: azure;
+    }
+    .form-group {
+        display: flex;
+        padding: 10px;
+    }
+    .btn {
+        background: bisque !important;
+        margin-left: 20%;
+    }
+    h1.w3-jumbo {
+        color: red;
+    }
+    h6.w3-center {
+        color: red;
+        text-decoration: underline;
+    }
+
+
+</style>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background: #EEA47FFF">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Auction System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav flex-row">
+                    <li> @Html.ActionLink("About", "About", "Home", new { @heading = "About" }, null)</li>
+                    <li> @Html.ActionLink("Item", "Index", "Items", new { @heading = "Item" }, null)</li>
+                    @if (!User.IsInRole("Administrator"))
+                    {
+                        <li> @Html.ActionLink("Auctions", "Index", "BidTables", new { @heading = "Bid" }, null)</li>
+                    }
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li>  @Html.ActionLink("Users", "Index", "Users", new { @heading = "Users" }, null)</li>
+                            <li>  @Html.ActionLink("Top Bidders", "TopBidders", "TopBidders", new { @heading = "TopBidders" }, null)</li>
+                            <li>  @Html.ActionLink("All Bidders", "AllBids", "TopBidders", new { @heading = "AllBids" }, null)</li>
+                            <li>  @Html.ActionLink("Role Mapping", "Index", "UserRoleMappings", new { @heading = "Role Mapping" }, null)</li>
+                        }
+                        @if (!Request.IsAuthenticated)
+                        {
+                            <li class="text-right">  @Html.ActionLink("Login", "Login", "User", new { @heading = "Login" }, null)</li>
+                        }
+                    </ul>
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                    }
+                }
+                </div>
+            </div>
+        </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Auction System Application</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

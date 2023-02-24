@@ -1,0 +1,87 @@
+﻿@model IEnumerable<auctionSystem.Models.BidTable>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BidderName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BidderText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bidprice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BidQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BidDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.close_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BidderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BidderText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bidprice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BidQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BidDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.close_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BidId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BidId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BidId })
+        </td>
+    </tr>
+}
+
+</table>

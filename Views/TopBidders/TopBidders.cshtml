@@ -1,0 +1,51 @@
+﻿@model IEnumerable<auctionSystem.Models.BidTable>
+
+@{
+    ViewBag.Title = "TopBidders";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <h2>Auction</h2>
+
+
+    <!-- Topic Cards -->
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <a href="">
+                            <div class="card-flyer">
+                                <div class="text-box">
+                                    <div class="image-box">
+                                        <img src="@Html.DisplayFor(modelItem => item.Item.picture)" alt="" />
+                                    </div>
+                                    <div class="text-container">
+                                        <h6>@Html.DisplayFor(modelItem => item.BidderName)</h6>
+                                        <p>Bidder Desc:  @Html.DisplayFor(modelItem => item.BidderText)</p>
+                                        <p>Item Name:  @Html.DisplayFor(modelItem => item.Item.ItemName)</p>
+                                        <p>Bid Price:  @Html.DisplayFor(modelItem => item.Bidprice)</p>
+                                        <p>Bid Quantity:  @Html.DisplayFor(modelItem => item.BidQuantity)</p>
+                                        <p>Bid Date:  @Html.DisplayFor(modelItem => item.DateCreated) </p>
+                                        <p>Item Name:  @Html.DisplayFor(modelItem => item.Item.ItemName) </p>
+                                        <p>User:  @Html.DisplayFor(modelItem => item.User.FirstName)</p>
+                                        <p style="padding: 10px;background:#EEA47FFF;color:aliceblue;font-weight:600;" data-itemid="@Html.DisplayFor(modelItem => item.ItemId)" data-totalquat="@Html.DisplayFor(modelItem => item.Item.itemQuantity)" data-quant="@Html.DisplayFor(modelItem => item.BidQuantity)" data-bidid="@Html.DisplayFor(modelItem => item.BidId)" class="approveLoanClass">
+                                            @Html.ActionLink("Approve Bid", "PaymentPage", "TopBidders") 
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h2>Please Kindly Login to continue</h2>
+}
+

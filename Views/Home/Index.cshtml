@@ -1,0 +1,127 @@
+﻿@*@{
+        ViewBag.Title = "Index";
+    }
+*@
+
+@model IEnumerable<auctionSystem.Models.Item>
+@{
+    ViewBag.Title = "Auction System" + @ViewBag.heading;
+}
+
+<h2>Index</h2>
+    Welcome @HttpContext.Current.User.Identity.Name
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+        }
+    }
+
+
+    @section scripts {
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+
+        <script>
+
+            $(function () {
+
+                var my_hub = $.connection.myHub;
+
+                // Server reply on bid attempt
+                my_hub.client.clientBidsUpdate = function (ItemIdtion, newState, newDuration, newLastBidder, newPrice, warningNoTokens) {
+                    var clientEmail = $("#" + "email" + ItemIdtion).val();
+                    $("#" + "state" + ItemIdtion).text(newState);
+                    $("#" + "time" + ItemIdtion).text(newDuration);
+                    $("#" + "price" + ItemIdtion).text(newPrice);
+                    // Unsuccessful bid
+                    if (warningNoTokens == "true") {
+                        if (newLastBidder == clientEmail) {
+                            alert("Not enough tokens to place bigger bid. Please buy some tokens!");
+                        }
+                        // Succesful bid
+                    } else {
+                        $("#" + "lastbidder" + ItemIdtion).text(newLastBidder);
+                        $("#" + "spanPrice" + ItemIdtion).addClass("glyphicon glyphicon-arrow-up");
+                        $("#" + "spanPrice2" + ItemIdtion).addClass("glyphicon glyphicon-arrow-up");
+                    }
+                };
+
+                // Timer Update method // each 1 second
+                my_hub.client.timerUpdate = function (ItemIdtion, newState, newDuration, newLastBidder, newPrice, lastTenSeconds, durationEvenOdd, end) {
+                    $("#" + "state" + ItemIdtion).text(newState);
+                    $("#" + "time" + ItemIdtion).text(newDuration);
+                    $("#" + "lastbidder" + ItemIdtion).text(newLastBidder);
+                    $("#" + "price" + ItemIdtion).text(newPrice);
+                    // Disable auction on client side
+                    if (newState == "Sold" || newState == "Expired") {
+                        if (newState == "Sold") {
+                            $("#" + "btn" + ItemIdtion).html("sold");
+                            $("#" + "btn" + ItemIdtion).removeClass("btn-warning btn").addClass("btn-info btn");
+                            $("#" + "btn" + ItemIdtion).css("background-color", "blueviolet");
+                            $("#" + "btn" + ItemIdtion).css("color", "white");
+                            $("#" + "state" + ItemIdtion).css("color", "blueviolet");
+                            $("#" + "spanLastBidder" + ItemIdtion).removeClass("glyphicon glyphicon-user").addClass("glyphicon glyphicon-ok");
+                            $("#" + "picture" + ItemIdtion).css("-webkit-filter", "blur(8px)").css("filter", "blur(8px)");
+                            $("#" + "btn" + ItemIdtion).prop("disabled", true);
+                        }
+                        else if (newState == "Expired") {
+                            $("#" + "btn" + ItemIdtion).html("expired");
+                            $("#" + "btn" + ItemIdtion).removeClass("btn-warning btn").addClass("btn-default btn");
+                            $("#" + "state" + ItemIdtion).css("color", "rgb(255, 54, 40)");
+                            $("#" + "spanLastBidder" + ItemIdtion).removeClass("glyphicon glyphicon-user").addClass("glyphicon glyphicon-remove");
+                            $("#" + "picture" + ItemIdtion).css("-webkit-filter", "blur(8px)").css("filter", "blur(8px)");
+                            $("#" + "btn" + ItemIdtion).prop("disabled", true);
+                            $("#" + "btn" + ItemIdtion).css("background-color", "rgb(255, 54, 40)");
+                        }
+                    }
+                    $("#" + "spanPrice" + ItemIdtion).removeClass("glyphicon glyphicon-arrow-up");
+                    $("#" + "spanPrice2" + ItemIdtion).removeClass("glyphicon glyphicon-arrow-up");
+
+                    // Start signalizing if duration is in final 10 seconds of auction
+                    if (lastTenSeconds == "true" && durationEvenOdd == "even") {
+                        if (end == "false") {
+                            $("#" + "time" + ItemIdtion).css("background-color", "rgb(119, 41, 83)");
+                            $("#" + "time" + ItemIdtion).css("color", "white");
+                        }
+                    } else { // No need to signalize
+                        $("#" + "time" + ItemIdtion).css("background-color", "transparent");
+                        $("#" + "time" + ItemIdtion).css("color", "silver");
+                    }
+                };
+
+                // Client sends bid to Server
+                $.connection.hub.start().done(function () {
+                    $('.btnBid').click(function (event) {
+                        alert("Log in to perform bid!");
+                    });
+                });
+
+            });
+
+            function htmlEncode(value) {
+                var encodedValue = $('<div />').text(value).html();
+                return encodedValue;
+            }
+
+            // Variables
+            var toolbarVisible = false;
+
+            // Search - Menu toolbar preview
+            $("#showHideBtn").click(function () {
+                $("#menuSearchToolbar").slideToggle("slow", "swing");
+                if (toolbarVisible == true) {
+                    toolbarVisible = false;
+                    $("#showHideBtn").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
+                } else {
+                    toolbarVisible = true;
+                    $("#showHideBtn").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
+                }
+            });
+
+        </script>
+    }
+

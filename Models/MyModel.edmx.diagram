@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dbc999f5adef4c1fb76e01b4b695d264" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="MyDatabaseModel.Role" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="MyDatabaseModel.BidTable" Width="1.5" PointX="7.5" PointY="12.875" />
+        <EntityTypeShape EntityType="MyDatabaseModel.File" Width="1.5" PointX="5.25" PointY="8.125" />
+        <EntityTypeShape EntityType="MyDatabaseModel.Item" Width="1.5" PointX="5.25" PointY="15.5" />
+        <EntityTypeShape EntityType="MyDatabaseModel.User" Width="1.5" PointX="3" PointY="9.625" />
+        <AssociationConnector Association="MyDatabaseModel.FK_BidTable_Item" />
+        <AssociationConnector Association="MyDatabaseModel.FK_BidTable_Users" />
+        <AssociationConnector Association="MyDatabaseModel.FK_File_Users" />
+        <AssociationConnector Association="MyDatabaseModel.FK_Item_Item" />
+        <AssociationConnector Association="MyDatabaseModel.FK_Users_Role" />
+        <EntityTypeShape EntityType="MyDatabaseModel.UserRoleMapping" Width="1.5" PointX="5.25" PointY="5.125" />
+        <AssociationConnector Association="MyDatabaseModel.FK_UserRoleMapping_Role" />
+        <AssociationConnector Association="MyDatabaseModel.FK_UserRoleMapping_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
